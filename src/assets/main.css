@@ -1,0 +1,32 @@
+@import './base.css';
+
+:root {
+  --btn-color: #EC5A12;
+  --input-grey : #F4F9FE;
+  --text-input: #627C93;
+  --beige: #FFE9DE;
+  --grey : #627C93;
+  --light-brown : #FFE9DE;
+  --brown : #89380F;
+  --dark-blue : #094171
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+main {
+
+  margin-top: 110px;
+}
+
+.container {
+  width: 1055px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
