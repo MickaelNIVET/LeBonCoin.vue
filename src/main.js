@@ -1,20 +1,33 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router'
+import VueCookies from 'vue-cookies'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faSignOutAlt, faSearch, faCircle, faMapMarkerAlt, faCheckDouble, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt, faSearch, faCircle, faMapMarkerAlt, faCheckDouble, faAngleLeft, faAngleRight, faArrowRight, } from '@fortawesome/free-solid-svg-icons'
 
-import { faUser, faPlusSquare, faHeart, faClock } from '@fortawesome/free-regular-svg-icons'
+import { faUser, faPlusSquare, faHeart, faClock, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 
-library.add(faSignOutAlt, faUser, faSearch, faPlusSquare, faCircle, faHeart, faMapMarkerAlt, faCheckDouble, faClock, faAngleLeft, faAngleRight)
+library.add(faSignOutAlt, faUser, faSearch, faPlusSquare, faCircle, faHeart, faMapMarkerAlt, faCheckDouble, faClock, faAngleLeft, faAngleRight, faArrowRight, faEye, faEyeSlash)
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(router)
+app.use(VueCookies)
+
+const userInfos = ref ($cookies.get('userInfos') || null)
+
+const changeUserInfos = (infos)=>{
+    userInfos.value = infos
+}
+
+app.provide('GlobalStore', {
+    userInfos: userInfos,
+    changeUserInfos: changeUserInfos
+})
 
 app.mount('#app')

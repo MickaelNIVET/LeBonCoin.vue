@@ -1,6 +1,36 @@
 <script setup>
+import { inject, ref } from 'vue';
 import BtnPublishOffer from './BtnPublishOffer.vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+
+
+const route = useRoute()
+const router = useRouter()
+const search = ref('')
+const GlobalStore = inject('GlobalStore')
+console.log(GlobalStore.userToken);
+
+const disconnectUser = () => {
+  GlobalStore.changeUserInfos(null)
+  $cookies.remove('userInfos')
+}
+
+const handleSubmit = () => {
+  console.log(search.value, route.query);
+
+  const queries = { ...route.query }
+
+  if (search.value) {
+    queries.title = search.value
+  } else {
+    delete queries.title
+  }
+
+  queries.page = 1
+
+  router.push({ name: 'home', query: queries })
+}
+
 
 </script>
 
@@ -9,24 +39,39 @@ import { RouterLink } from 'vue-router';
     <div class="container">
       <div class="topPart">
         <RouterLink :to="{ name: 'home' }">
-        <img src="../assets/logo.svg" alt="logo" />
+          <img src="../assets/logo.svg" alt="logo" />
         </RouterLink>
-        <div  class="middlePart" >
+        <div class="middlePart">
           <BtnPublishOffer />
-          <div>
-            <input type="text" name="search" id="search" placeholder="Rechercher sur Leboncoin" />
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </div>
+
+          <form @submit.prevent="handleSubmit">
+            <input type="text" name="search" id="search" placeholder="Rechercher sur Leboncoin" v-model="search" />
+            <button><font-awesome-icon :icon="['fas', 'search']" /></button>
+
+          </form>
+
         </div>
 
         <div>
           <div class="rightPart">
-            <font-awesome-icon :icon="['far', 'user']" />
-            <p>Se connecter</p>
+            <RouterLink :to="{ name: 'login' }" v-if="!GlobalStore.userInfos.value">
+              <font-awesome-icon :icon="['far', 'user']" />
+              <p>Se connecter</p>
+            </RouterLink>
+
+            <div v-else class="disconnectPart">
+
+              <div>
+                <font-awesome-icon :icon="['far', 'user']" />
+                <p>{{ GlobalStore.userInfos.value.username }}</p>
+              </div>
+
+              <font-awesome-icon :icon="['fas', 'sign-out-alt']" @click="disconnectUser" />
+            </div>
           </div>
-           <!-- <font-awesome-icon :icon="['fas', 'sign-out-alt']" /> -->
         </div>
       </div>
+
       <div class="category">
         <span>Immobilier</span>
         <font-awesome-icon :icon="['fas', 'circle']" />
@@ -62,20 +107,20 @@ import { RouterLink } from 'vue-router';
 </template>
 
 <style scoped>
-
 header {
-height: 110px;
-position: fixed;
-top: 0;
-width: 100%;
-background-color: white;
-border-bottom: var(--text-input) 1px solid;
+  height: 110px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  border-bottom: var(--text-input) 1px solid;
 }
 
 
-.container > div {
+.container>div {
   display: flex;
 }
+
 /*------Top part--------*/
 
 .topPart {
@@ -85,23 +130,36 @@ border-bottom: var(--text-input) 1px solid;
   padding: 10px 0;
 }
 
+.disconnectPart {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.disconnectPart>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
 /*------Middle part--------*/
 
 .middlePart {
   display: flex;
   gap: 20px;
   align-items: center;
- 
+
 }
 
-.middlePart > div {
+.middlePart>form {
   background-color: var(--input-grey);
   padding: 1px 2px;
   border-radius: 10px;
   display: flex;
   align-items: center;
- 
-  
+
+
 }
 
 input {
@@ -111,6 +169,7 @@ input {
   padding: 8px;
   font-size: 16px;
   color: var(--text-input);
+
 }
 
 input::placeholder {
@@ -121,17 +180,23 @@ input:focus {
   outline: none;
 }
 
-.middlePart > div svg {
+.middlePart>form svg {
   background-color: var(--btn-color);
   padding: 7px;
   border-radius: 10px;
   box-sizing: content-box;
-  
+
+}
+
+.middlePart>form button {
+  border: none;
+  background-color: rgba(255, 99, 71, 0);
+  cursor: pointer;
 }
 
 /*------Right part--------*/
 
-.rightPart {
+.rightPart>a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,10 +204,12 @@ input:focus {
   gap: 7px;
 }
 
+
 .rightPart p {
   font-size: 12px;
-  
+
 }
+
 /*-------Category-------*/
 .category {
   display: flex;
@@ -150,7 +217,7 @@ input:focus {
   justify-content: space-between;
   font-size: 14px;
   margin-top: 10px;
-  
+
 }
 
 .category svg {
@@ -160,6 +227,4 @@ input:focus {
 img {
   width: 140px;
 }
-
-
 </style>
