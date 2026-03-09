@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { inject } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -36,7 +37,22 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component : LoginView
+    },{
+
+      path: '/publish',
+      name: 'publish',
+      component : () => import('../views/PublishView.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })
+
+router.beforeEach((to, from) => {
+  const GlobalStore = inject('GlobalStore')
+
+  if (to.meta.requiresAuth && !GlobalStore.userInfos.value?.token) {
+    return { name: 'login' }
+  }
+})
+
 export default router

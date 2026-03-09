@@ -5,96 +5,98 @@ import axios from 'axios';
 import { useCycleList } from '@vueuse/core'
 
 const props = defineProps({
-  id: String,
+    id: String,
 })
 
-const formatDate = computed (() => {
-  return offerInfos.value.attributes.publishedAt.split('T')[0].split('-').reverse().join('/');
+const formatDate = computed(() => {
+    return offerInfos.value.attributes.publishedAt.split('T')[0].split('-').reverse().join('/');
 })
 
-const cycleList = computed (()=>{
+const cycleList = computed(() => {
     if (offerInfos.value.attributes.pictures.data) {
-const { state, next, prev } = useCycleList (offerInfos.value.attributes.pictures.data)
+        const { state, next, prev } = useCycleList(offerInfos.value.attributes.pictures.data)
 
         return { state, next, prev }
     } else {
         return {}
     }
 })
-const offerInfos = ref (null)
+const offerInfos = ref(null)
 
 onMounted(async () => {
-  
-try {
-    
-const { data } = await axios.get(
-      `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers/${props.id}?populate[0]=pictures&populate[1]=owner.avatar`
-    );
 
-    console.log("Response offerView >>>", data.data.attributes.owner.data.attributes.avatar.data.attributes.url);
-    
-    offerInfos.value = data.data;
+    try {
+
+        const { data } = await axios.get(
+            `https://site--strapileboncoin--2m8zk47gvydr.code.run/api/offers/${props.id}?populate[0]=pictures&populate[1]=owner.avatar`
+        );
+
+        //console.log("Response offerView >>>", data.data.attributes.owner.data.attributes.avatar.data.attributes.url);
+
+        offerInfos.value = data.data;
 
 
-} catch (error) {
-    console.log("catch offerView >>>", error);
-}
-    
+    } catch (error) {
+        console.log("catch offerView >>>", error);
+    }
+
 })
 
 </script>
 <template>
-  <main>
-    <p v-if="offerInfos === null" class="container"> Chargement en cours...</p>
-    <div class="container" v-else>
-        <div class="leftCol">
-        <div class="caroussel">
-            <font-awesome-icon :icon="['fas', 'angle-left']"
-            @click="cycleList.prev()" v-if="offerInfos.attributes.pictures.data?.length>1"/>
-            <img :src="cycleList.state.value.attributes.url" alt="">
-            <font-awesome-icon :icon="['fas', 'angle-right']"
-            @click="cycleList.next()" v-if="offerInfos.attributes.pictures.data?.length>1"/>
-        </div>
-            
-            
-        <div class="infoBox">
-            <p>{{ offerInfos.attributes.title }}</p>
-            <p>{{ offerInfos.attributes.price }} €</p>
-            <p>{{ formatDate }}</p>
-        </div>
-            
-        <div class="separator" aria-hidden="true"></div>
+    <main>
+        <p v-if="offerInfos === null" class="container"> Chargement en cours...</p>
+        <div class="container" v-else>
+            <div class="leftCol">
+                <div class="caroussel">
+                    <font-awesome-icon :icon="['fas', 'angle-left']" @click="cycleList.prev()"
+                        v-if="offerInfos.attributes.pictures.data?.length > 1" />
+                    <img :src="cycleList.state.value.attributes.url" alt="">
+                    <font-awesome-icon :icon="['fas', 'angle-right']" @click="cycleList.next()"
+                        v-if="offerInfos.attributes.pictures.data?.length > 1" />
+                </div>
 
-            <h2>Description</h2>
 
-            <p class="description">{{ offerInfos.attributes.description }}</p>
+                <div class="infoBox">
+                    <p>{{ offerInfos.attributes.title }}</p>
+                    <p>{{ offerInfos.attributes.price }} €</p>
+                    <p>{{ formatDate }}</p>
+                </div>
 
-            <div class="separator" aria-hidden="true"></div>
+                <div class="separator" aria-hidden="true"></div>
 
-            <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
-            <span>Le Plessis-Robinson (92350)</span>
-        </div>
+                <h2>Description</h2>
 
-        <div class="rightCol">
-            <div class="ownerInfos">
-                <img :src="offerInfos.attributes.owner.data.attributes.avatar.data.attributes.url" alt="">
-                <p>{{ offerInfos.attributes.owner.data.attributes.username }}</p>
+                <p class="description">{{ offerInfos.attributes.description }}</p>
+
+                <div class="separator" aria-hidden="true"></div>
+
+                <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
+                <span>Le Plessis-Robinson (92350)</span>
             </div>
 
-            <p class="identity"> <font-awesome-icon :icon="['fas', 'check-double']" /> Pièce d’identité vérifiée</p>
-            <p class="msg"> <font-awesome-icon :icon="['far', 'clock']" /> Répond généralement en 1 heure</p>
+            <div class="rightCol">
+                <div class="ownerInfos">
 
-            <div class="separator" aria-hidden="true"></div>
+                    <img v-if="offerInfos.attributes.owner.data.attributes.avatar.data"
+                        :src="offerInfos.attributes.owner.data.attributes.avatar.data.attributes.url" alt="">
+                    <p>{{ offerInfos.attributes.owner.data.attributes.username }}</p>
+                </div>
 
-            <button class="one">Acheter</button>
-            <button class="two">Message</button>
+                <p class="identity"> <font-awesome-icon :icon="['fas', 'check-double']" /> Pièce d’identité vérifiée</p>
+                <p class="msg"> <font-awesome-icon :icon="['far', 'clock']" /> Répond généralement en 1 heure</p>
+
+                <div class="separator" aria-hidden="true"></div>
+
+                <button class="one">Acheter</button>
+                <button class="two">Message</button>
+            </div>
         </div>
-    </div>
-  </main>
+    </main>
 </template>
 
 <style scoped>
-img{
+img {
     height: 200px;
     width: 200px;
 }
@@ -122,9 +124,9 @@ h2 {
 }
 
 .caroussel svg {
-font-size: 20px;
-font-weight:lighter;
-cursor: pointer;
+    font-size: 20px;
+    font-weight: lighter;
+    cursor: pointer;
 }
 
 
@@ -135,7 +137,7 @@ cursor: pointer;
 .leftCol img {
     width: 100%;
     height: 350px;
-    object-fit: contain ;
+    object-fit: contain;
     margin-bottom: 20px;
 }
 
@@ -154,7 +156,7 @@ span {
 .infoBox p:first-child {
     font-size: 24px;
     font-weight: bold;
-    
+
 }
 
 .infoBox p:nth-child(2) {
@@ -170,14 +172,14 @@ span {
 
 /*---------------*/
 .rightCol {
-   width: 35%;
-   height: 365px;
-   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-   padding: 20px;
+    width: 35%;
+    height: 365px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
 .rightCol img {
-   height: 70px;
+    height: 70px;
     width: 70px;
     border-radius: 50%;
 }
@@ -202,6 +204,7 @@ span {
     color: var(--brown);
     width: fit-content;
 }
+
 .msg {
     font-size: 14px;
     margin-bottom: 40px;
@@ -233,8 +236,4 @@ button {
 .two {
     background-color: var(--dark-blue);
 }
-
-
-
-
 </style>

@@ -1,17 +1,18 @@
 <script setup>
-
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
 
-    <button>
-          <font-awesome-icon :icon="['far', 'plus-square']" />
-          Déposer un annonce
-        </button>
+  <button>
+    <RouterLink :to="{ name: 'publish' }">
+      <font-awesome-icon :icon="['far', 'plus-square']" />
+      Déposer un annonce
+    </RouterLink>
+  </button>
 </template>
 
 <style scoped>
-
 button {
   background-color: var(--btn-color);
   color: white;
