@@ -13,6 +13,8 @@ console.log(GlobalStore.userToken);
 const disconnectUser = () => {
   GlobalStore.changeUserInfos(null)
   $cookies.remove('userInfos')
+
+  router.push({ name: 'home' })
 }
 
 const handleSubmit = () => {

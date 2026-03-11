@@ -1,6 +1,6 @@
 <script setup>
 
-import { RouterLink, useRouter } from 'vue-router';
+import { RouterLink, useRouter, useRoute } from 'vue-router';
 import { ref, inject } from 'vue';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ const displayPassword = ref(false)
 
 const GlobalStore = inject('GlobalStore')
 const router = useRouter()
+const route = useRoute()
 
 const handleSubmit = async () => {
 
@@ -35,7 +36,7 @@ const handleSubmit = async () => {
 
             $cookies.set('userInfos', { username: data.user.username, token: data.jwt, id: data.user.id })
 
-            router.push({ name: 'home' })
+            router.push({ name: route.query.redirect || 'home' })
 
         } catch (error) {
 
