@@ -3,6 +3,9 @@ import { inject } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import LoginView from '../views/LoginView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
+import ProfileView from '../views/ProfileView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,13 +40,27 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component : LoginView
-    },{
+    },
+    {
 
       path: '/publish',
       name: 'publish',
       component : () => import('../views/PublishView.vue'),
       meta: { requiresAuth: true }
-    }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component : ProfileView,
+      meta: { requiresAuth: true }
+    },
+    {
+
+      path: '/:pathMatch(.*)*',
+      name: 'notfound',
+      component : NotFoundView
+    },
+    
   ]
 })
 
@@ -51,7 +68,7 @@ router.beforeEach((to, from) => {
   const GlobalStore = inject('GlobalStore')
 
   if (to.meta.requiresAuth && !GlobalStore.userInfos.value?.token) {
-    return { name: 'login' , query: { redirect: to.name } }
+    return { name: 'login' , query: { redirect: to.path } }
   }
 })
 

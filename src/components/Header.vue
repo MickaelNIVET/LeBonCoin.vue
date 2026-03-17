@@ -33,6 +33,13 @@ const handleSubmit = () => {
   router.push({ name: 'home', query: queries })
 }
 
+const changeValue = (event) => {
+  if (event.target.value === '') {
+    const queries = { ...route.query }
+    delete queries.title
+    router.push({ name: 'home', query: queries })
+  }
+}
 
 </script>
 
@@ -47,7 +54,8 @@ const handleSubmit = () => {
           <BtnPublishOffer />
 
           <form @submit.prevent="handleSubmit">
-            <input type="text" name="search" id="search" placeholder="Rechercher sur Leboncoin" v-model="search" />
+            <input type="text" name="search" id="search" placeholder="Rechercher sur Leboncoin" v-model="search"
+              @input="changeValue" />
             <button><font-awesome-icon :icon="['fas', 'search']" /></button>
 
           </form>
@@ -64,8 +72,10 @@ const handleSubmit = () => {
             <div v-else class="disconnectPart">
 
               <div>
-                <font-awesome-icon :icon="['far', 'user']" />
-                <p>{{ GlobalStore.userInfos.value.username }}</p>
+                <RouterLink :to="{ name: 'profile' }">
+                  <font-awesome-icon :icon="['far', 'user']" />
+                  <p>{{ GlobalStore.userInfos.value.username }}</p>
+                </RouterLink>
               </div>
 
               <font-awesome-icon :icon="['fas', 'sign-out-alt']" @click="disconnectUser" />
@@ -138,7 +148,7 @@ header {
   align-items: center;
 }
 
-.disconnectPart>div {
+.disconnectPart>div>a {
   display: flex;
   flex-direction: column;
   align-items: center;

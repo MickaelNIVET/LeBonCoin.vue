@@ -3,17 +3,17 @@
 </script>
 
 <template>
-<footer>
-<p class="container">
-    Made by <a href="https://www.lereacteur.io/"> Le Reacteur </a> 
-    with 
-    <a href="https://vuejs.org/"> Vue.js</a></p>
-</footer>
+    <footer>
+        <p class="container">
+            Made by <a href="https://www.lereacteur.io/"> Le Reacteur </a>
+            with
+            <a href="https://vuejs.org/"> Vue.js</a>
+        </p>
+    </footer>
 </template>
 
 <style scoped>
-
-footer{
+footer {
     height: 80px;
     background-color: var(--input-grey);
 }
