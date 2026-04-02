@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { inject } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -64,12 +63,6 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
-  const GlobalStore = inject('GlobalStore')
-
-  if (to.meta.requiresAuth && !GlobalStore.userInfos.value?.token) {
-    return { name: 'login' , query: { redirect: to.path } }
-  }
-})
+// ❌ SUPPRIMÉ : Le router.beforeEach a été déplacé dans main.js
 
 export default router
