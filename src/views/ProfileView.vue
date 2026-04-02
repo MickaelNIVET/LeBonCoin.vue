@@ -191,6 +191,12 @@ main {
     flex: 1
 }
 
+.blocOffers svg {
+    flex: 0.5;
+    color: var(--btn-color);
+    cursor: pointer;
+}
+
 .offers {
     width: 100%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.16);
@@ -214,10 +220,5 @@ main {
 
 .offers p {
     color: #89380F;
-}
-
-.offers svg {
-    color: var(--btn-color);
-    cursor: pointer;
 }
 </style>
