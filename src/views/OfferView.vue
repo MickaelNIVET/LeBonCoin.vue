@@ -107,6 +107,13 @@ img {
     padding: 50px 0px;
 }
 
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 20px 0px;
+    }
+}
+
 h2 {
     margin-bottom: 20px;
     font-size: 18px;
@@ -134,11 +141,23 @@ h2 {
     width: 65%;
 }
 
+@media (max-width: 768px) {
+    .leftCol {
+        width: 100%;
+    }
+}
+
 .leftCol img {
     width: 100%;
     height: 350px;
     object-fit: contain;
     margin-bottom: 20px;
+}
+
+@media (max-width: 480px) {
+    .leftCol img {
+        height: 250px;
+    }
 }
 
 span {
@@ -173,9 +192,16 @@ span {
 /*---------------*/
 .rightCol {
     width: 35%;
-    height: 365px;
+    height: fit-content;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .rightCol {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 
 .rightCol img {

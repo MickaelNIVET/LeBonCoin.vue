@@ -74,6 +74,13 @@ form {
     width: 100%;
 }
 
+@media (max-width: 820px) {
+    form {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
 p {
     font-size: 16px;
     font-weight: bold;
@@ -83,6 +90,13 @@ p {
 .priceBloc {
     display: flex;
     gap: 20px;
+}
+
+@media (max-width: 480px) {
+    .priceBloc {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 
 .priceBloc>div {
@@ -98,6 +112,12 @@ p {
     border: none;
     border: 1px solid var(--light-grey);
     border-radius: 15px 0 0 15px;
+}
+
+@media (max-width: 480px) {
+    .priceBloc input {
+        width: 100%;
+    }
 }
 
 .priceBloc label {
@@ -121,6 +141,12 @@ p {
     gap: 20px;
 }
 
+@media (max-width: 820px) {
+    .sortBloc {
+        flex-wrap: wrap;
+    }
+}
+
 .sortBloc label {
     display: flex;
     align-items: center;
@@ -140,5 +166,13 @@ button {
     cursor: pointer;
     height: 37px;
     padding: 0px 10px;
+    align-self: flex-start;
+}
+
+@media (max-width: 820px) {
+    button {
+        width: 100%;
+        height: 45px;
+    }
 }
 </style>

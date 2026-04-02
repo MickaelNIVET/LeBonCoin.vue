@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router';
   <button>
     <RouterLink :to="{ name: 'publish' }">
       <font-awesome-icon :icon="['far', 'plus-square']" />
-      Déposer un annonce
+      Déposer une annonce
     </RouterLink>
   </button>
 </template>

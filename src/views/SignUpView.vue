@@ -121,13 +121,25 @@ main {
     flex-direction: column;
     gap: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    height: 490px;
+    height: auto;
+    min-height: 490px;
     width: 480px;
+    max-width: 95%;
     border-radius: 15px;
     padding: 30px;
     margin-bottom: 50px;
     margin-top: 150px;
     background-color: white;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 130px;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
 }
 
 .container>div {
@@ -207,7 +219,8 @@ main {
 }
 
 button {
-    width: 420px;
+    width: 100%;
+    max-width: 420px;
     padding: 1px 6px;
     background-color: var(--btn-color);
     color: white;

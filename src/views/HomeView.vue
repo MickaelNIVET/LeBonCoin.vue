@@ -49,9 +49,9 @@ onMounted(() => {
     <div class="container" v-else>
       <Filters :sort="sort" :priceMax="pricemax" :priceMin="pricemin" :title="title" :page="page" />
 
-      <p>Des millions de petites annonces et autant d’occasions de se faire plaisir</p>
+      <p class="desktopsOnly">Des millions de petites annonces et autant d’occasions de se faire plaisir</p>
 
-      <TimeToSell />
+      <TimeToSell class="desktopsOnly" />
 
       <div class="offers">
         <OfferCards v-for="offer in offersList" :key="offer.id" :offerInfos="offer" />
@@ -78,14 +78,33 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 50px 0px;
+}
 
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 0px;
+  }
 }
 
 .container p {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 50px;
+  text-align: center;
+}
 
+.desktopsOnly {
+  display: block;
+}
 
+@media (max-width: 768px) {
+  .container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .desktopsOnly {
+    display: none !important;
+  }
 }
 </style>

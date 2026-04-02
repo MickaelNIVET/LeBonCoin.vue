@@ -179,14 +179,16 @@ p {
     font-size: 12px;
     color: var(--grey);
     margin-top: 5px;
-    width: 770px;
+    width: 100%;
 }
 
 input,
 textarea {
     border: solid 1px var(--grey);
     border-radius: 10px;
-    width: 770px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 770px;
 }
 
 input[type="text"] {
@@ -279,6 +281,14 @@ button {
     align-self: flex-end;
     font-weight: bold;
     margin-top: 40px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    button {
+       width: 100%;
+       padding: 15px;
+    }
 }
 
 .imagesPreview {
